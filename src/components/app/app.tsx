@@ -21,11 +21,7 @@ import {
 } from '../../services/slices/ingredientSlice';
 import { useEffect } from 'react';
 import { getFeed } from '../../services/slices/feedSlice';
-import {
-  getUser,
-  // getUserOrder,
-  getUserState
-} from '../../services/slices/userSlice';
+import { getUser, getUserState } from '../../services/slices/userSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -33,7 +29,6 @@ const App = () => {
     dispatch(getAllIngredients());
     dispatch(getFeed());
     dispatch(getUser());
-    // dispatch(getUserOrder());
   }, []);
 
   const navigate = useNavigate();
@@ -49,7 +44,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes location={background}>
+      <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route path='/feed/:number' element={<OrderInfo />} />

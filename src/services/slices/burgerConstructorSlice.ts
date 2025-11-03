@@ -1,7 +1,7 @@
 import { orderBurgerApi } from '@api';
 import { BurgerConstructor } from '@components';
 import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TOrder } from '@utils-types';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 
 interface IConstructorState {
   loading: boolean;
@@ -37,20 +37,34 @@ export const burgerConstructorSlice = createSlice({
     getConstructorItem: (state) => state
   },
   reducers: {
-    addIngredient: (state, action) => {
-      if (action.payload.type === 'bun') {
-        state.constructorItems.bun = action.payload;
-      } else {
-        state.constructorItems.ingredients.push({
-          id: nanoid(),
-          ...action.payload
-        });
+    // addIngredient: (state, action) => {
+    //   if (action.payload.type === 'bun') {
+    //     state.constructorItems.bun = action.payload;
+    //   } else {
+    //     state.constructorItems.ingredients.push({
+    //       id: nanoid(),
+    //       ...action.payload
+    //     });
+    //   }
+    // },
+    addIngredient: {
+      reducer: (state, action) => {
+        const item = action.payload;
+        if (item.type === 'bun') {
+          state.constructorItems.bun = item;
+        } else {
+          state.constructorItems.ingredients.push(item);
+        }
+      },
+      prepare: (item: TIngredient) => {
+        payload: const isBun = item.type === 'bun';
+        return {
+          payload: isBun ? item : { ...item, id: nanoid() },
+          meta: {},
+          error: undefined
+        };
       }
     },
-    // removeIngredient: (state, action) => {
-    //   state.constructorItems.ingredients =
-    //     state.constructorItems.ingredients.toSpliced(action.payload, 1);
-    // },
     removeIngredient: (state, action) => {
       state.constructorItems.ingredients =
         state.constructorItems.ingredients.filter(
@@ -82,7 +96,6 @@ export const burgerConstructorSlice = createSlice({
       ];
     }
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(sendOrder.pending, (state) => {

@@ -19,7 +19,6 @@ interface IUser {
   user: TUser | null;
   authorization: boolean;
   error: string | null;
-  // orders: TOrder[];
 }
 
 const initialState: IUser = {
@@ -27,10 +26,7 @@ const initialState: IUser = {
   user: null,
   authorization: false,
   error: null
-  // orders: []
 };
-
-// export const getUserOrder = createAsyncThunk('user/orders', getOrdersApi);
 
 export const getUser = createAsyncThunk('user/get', getUserApi);
 
@@ -129,7 +125,6 @@ export const userSlice = createSlice({
         state.error = null;
         state.user = null;
         state.authorization = false;
-        // state.orders = [];
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
       })
@@ -171,19 +166,6 @@ export const userSlice = createSlice({
         state.loading = false;
         state.error = null;
       });
-    // .addCase(getUserOrder.pending, (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    // })
-    // .addCase(getUserOrder.rejected, (state, { error }) => {
-    //   state.loading = false;
-    //   state.error = error.message as string;
-    // })
-    // .addCase(getUserOrder.fulfilled, (state, { payload }) => {
-    //   state.loading = false;
-    //   state.error = null;
-    //   state.orders = payload;
-    // });
   }
 });
 
