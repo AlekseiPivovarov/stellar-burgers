@@ -14,15 +14,15 @@ type ProtectedRouteProps = {
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const state = useSelector(getUserState);
+  console.log(state.authorization);
 
-  if (state.loading || (!state.authorization && !state.error)) {
+  if (state.loading) {
     return <Preloader />;
   }
 
   if (!state.authorization) {
     return <Navigate replace to='/login' />;
   }
-
   // рендерим защищённый компонент
   return children;
 };

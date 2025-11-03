@@ -11,13 +11,15 @@ import { ingredientsSlice } from './slices/ingredientSlice';
 import { feedSlice } from './slices/feedSlice';
 import { orderInfoSlice } from './slices/orderSlice';
 import { userSlice } from './slices/userSlice';
+import { userOrderSlice } from './slices/userOrderSlice';
 
 const rootReducer = combineReducers({
   constructorbg: burgerConstructorSlice.reducer,
   ingredients: ingredientsSlice.reducer,
   feedInfo: feedSlice.reducer,
   orderInfo: orderInfoSlice.reducer,
-  user: userSlice.reducer
+  user: userSlice.reducer,
+  userOrder: userOrderSlice.reducer
 });
 
 export const store = configureStore({

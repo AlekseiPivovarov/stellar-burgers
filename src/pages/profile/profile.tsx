@@ -1,12 +1,15 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
-import { getUserState, updateUser } from '../../services/slices/userSlice';
+import {
+  getUser,
+  getUserState,
+  updateUser
+} from '../../services/slices/userSlice';
 import { TUser } from '@utils-types';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
-
   const user = useSelector(getUserState).user as TUser;
   const dispatch = useDispatch();
 
@@ -60,6 +63,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
-  return null;
 };

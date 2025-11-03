@@ -9,26 +9,34 @@ import {
   getConstructorItem
 } from '../../services/slices/burgerConstructorSlice';
 import { getUserState } from '../../services/slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const constructorItems = useSelector(getConstructorItem).constructorItems;
   const authorization = useSelector(getUserState).authorization;
   const orderRequest = useSelector((store) => store.constructorbg.orderRequest);
+  const navigate = useNavigate();
 
   const orderModalData = useSelector(
     (store) => store.constructorbg.orderModalData
   );
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest || !authorization) return;
+    if (!constructorItems.bun || orderRequest) return;
 
-    dispatch(setOrderRequest(true));
-    const bunId = constructorItems.bun._id;
-    const ingredientsIds = constructorItems.ingredients.map(
-      (ingredient) => ingredient._id
-    );
-    const order = [bunId, ...ingredientsIds, bunId];
-    dispatch(sendOrder(order));
+    if (!authorization) {
+      navigate('/login');
+      return;
+    }
+    if (constructorItems.bun) {
+      dispatch(setOrderRequest(true));
+      const bunId = constructorItems.bun._id;
+      const ingredientsIds = constructorItems.ingredients.map(
+        (ingredient) => ingredient._id
+      );
+      const order = [bunId, ...ingredientsIds, bunId];
+      dispatch(sendOrder(order));
+    }
   };
   const closeOrderModal = () => {
     dispatch(setOrderRequest(false));

@@ -23,7 +23,7 @@ import { useEffect } from 'react';
 import { getFeed } from '../../services/slices/feedSlice';
 import {
   getUser,
-  getUserOrder,
+  // getUserOrder,
   getUserState
 } from '../../services/slices/userSlice';
 
@@ -33,7 +33,7 @@ const App = () => {
     dispatch(getAllIngredients());
     dispatch(getFeed());
     dispatch(getUser());
-    dispatch(getUserOrder());
+    // dispatch(getUserOrder());
   }, []);
 
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='Modal' onClose={goBack('/feed')}>
+              <Modal title='Детали заказа' onClose={goBack('/feed')}>
                 <OrderInfo />
               </Modal>
             }
@@ -99,7 +99,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Modal' onClose={goBack('/')}>
+              <Modal title='Детали ингредиента' onClose={goBack('/')}>
                 <IngredientDetails />
               </Modal>
             }
@@ -108,7 +108,10 @@ const App = () => {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal title='Order info' onClose={goBack('/profile/orders')}>
+                <Modal
+                  title='Детали заказа'
+                  onClose={goBack('/profile/orders')}
+                >
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>

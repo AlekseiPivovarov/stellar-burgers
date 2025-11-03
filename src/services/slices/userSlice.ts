@@ -19,18 +19,18 @@ interface IUser {
   user: TUser | null;
   authorization: boolean;
   error: string | null;
-  orders: TOrder[];
+  // orders: TOrder[];
 }
 
 const initialState: IUser = {
   loading: false,
   user: null,
   authorization: false,
-  error: null,
-  orders: []
+  error: null
+  // orders: []
 };
 
-export const getUserOrder = createAsyncThunk('user/orders', getOrdersApi);
+// export const getUserOrder = createAsyncThunk('user/orders', getOrdersApi);
 
 export const getUser = createAsyncThunk('user/get', getUserApi);
 
@@ -129,7 +129,7 @@ export const userSlice = createSlice({
         state.error = null;
         state.user = null;
         state.authorization = false;
-        state.orders = [];
+        // state.orders = [];
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
       })
@@ -170,20 +170,20 @@ export const userSlice = createSlice({
       .addCase(resetPassword.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
-      })
-      .addCase(getUserOrder.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getUserOrder.rejected, (state, { error }) => {
-        state.loading = false;
-        state.error = error.message as string;
-      })
-      .addCase(getUserOrder.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.error = null;
-        state.orders = payload;
       });
+    // .addCase(getUserOrder.pending, (state) => {
+    //   state.loading = true;
+    //   state.error = null;
+    // })
+    // .addCase(getUserOrder.rejected, (state, { error }) => {
+    //   state.loading = false;
+    //   state.error = error.message as string;
+    // })
+    // .addCase(getUserOrder.fulfilled, (state, { payload }) => {
+    //   state.loading = false;
+    //   state.error = null;
+    //   state.orders = payload;
+    // });
   }
 });
 
