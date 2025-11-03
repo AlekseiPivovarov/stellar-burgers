@@ -23,7 +23,6 @@ export const ResetPassword: FC = () => {
       })
       .catch((err) => setError(err));
   };
-  console.log(localStorage.getItem('resetPassword'));
 
   useEffect(() => {
     if (!localStorage.getItem('resetPassword')) {

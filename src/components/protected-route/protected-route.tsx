@@ -14,7 +14,6 @@ type ProtectedRouteProps = {
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const state = useSelector(getUserState);
-  console.log(state.authorization);
 
   if (state.loading) {
     return <Preloader />;
