@@ -1,6 +1,6 @@
 import { Preloader } from '@ui';
 import React, { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import {
   getAuthorization,
   getUser,
@@ -14,14 +14,17 @@ type ProtectedRouteProps = {
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const state = useSelector(getUserState);
+  const location = useLocation();
 
   if (state.loading) {
     return <Preloader />;
   }
 
   if (!state.authorization) {
-    return <Navigate replace to='/login' />;
+    // Сохраняем текущий путь в state и делаем редирект
+    return <Navigate to='/login' state={{ from: location }} replace />;
   }
+
   // рендерим защищённый компонент
   return children;
 };

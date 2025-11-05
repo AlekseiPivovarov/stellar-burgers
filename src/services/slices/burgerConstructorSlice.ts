@@ -57,7 +57,7 @@ export const burgerConstructorSlice = createSlice({
         }
       },
       prepare: (item: TIngredient) => {
-        payload: const isBun = item.type === 'bun';
+        const isBun = item.type === 'bun';
         return {
           payload: isBun ? item : { ...item, id: nanoid() },
           meta: {},
